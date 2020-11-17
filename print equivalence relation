@@ -1,0 +1,63 @@
+#include <cstdio>
+#include "equiv.h"
+using namespace std;
+
+ER newER(int n)
+{
+int* array = new int [n];
+for(int i=0; i<n; i++)
+{
+array[i]=i+1;
+}
+return array;
+}
+
+void showER(const ER r, int n)
+{
+for(int i=0; i<n; i++)
+{
+printf("%i, %i ", r[i], i+1);
+}
+}
+
+int leader(ER r, int x)
+{
+int firstX = x;
+while (r[x-1]!=x)
+{
+x = r[x-1];
+}
+while (r[firstX-1] != firstX)
+{
+firstX = r[firstX-1];
+r[firstX-1] = x;
+}
+return x;
+}
+
+void combine(ER r, int x, int y)
+{
+int leaderOfX = leader(r,x);
+int leaderOfY = leader(r,y);
+r[leaderOfX -1] = leaderOfY;
+}
+
+bool equivalent(ER r, int x, int y)
+{
+int leaderOfX = leader(r,x);
+int leaderOfY = leader(r,y);
+if (leaderOfX == leaderOfY)
+{
+return true;
+}
+else
+{
+return false;
+}
+}
+
+void destroyER(ER r)
+{
+delete r;
+}
+
